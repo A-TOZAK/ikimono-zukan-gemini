@@ -3,474 +3,446 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gemini学習サポート｜わたしのクラスの「生き物図かん」</title>
-  <meta name="description" content="4年国語「わたしのクラスの生き物図かん」でGeminiを使うためのプロンプト集。生き物えらび・調べる・構成メモ・ブラッシュアップの4ステップ。">
+  <title>Gemini学習サポート｜生き物図かん</title>
+  <meta name="description" content="4年国語「わたしのクラスの生き物図かん」Gemini学習サポート。プロンプトをコピーしてGeminiに貼り付けよう。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --g9: #14532d;
-      --g7: #15803d;
-      --g5: #22c55e;
-      --g1: #dcfce7;
-      --g0: #f0fdf4;
-      --b7: #1d4ed8;
-      --b5: #3b82f6;
-      --b1: #dbeafe;
-      --b0: #eff6ff;
-      --p7: #6d28d9;
-      --p1: #ede9fe;
-      --a6: #d97706;
-      --a1: #fef9c3;
-      --a0: #fffbeb;
-      --c7: #0e7490;
-      --c1: #cffafe;
-      --s8: #1e293b;
-      --s6: #475569;
-      --s4: #94a3b8;
-      --s2: #e2e8f0;
-      --s1: #f1f5f9;
-      --wh: #ffffff;
-      --paper: #fbfaf6;
-      --shadow-sm: 0 2px 8px rgba(20,83,45,.08);
-      --shadow: 0 8px 24px rgba(20,83,45,.12);
-      --shadow-lg: 0 16px 40px rgba(20,83,45,.15);
-      --radius: 14px;
+      --green: #15803d;
+      --green-dark: #14532d;
+      --green-light: #f0fdf4;
+      --green-border: #bbf7d0;
+      --text: #111827;
+      --text-sub: #6b7280;
+      --border: #e5e7eb;
+      --bg: #ffffff;
+      --bg-gray: #f9fafb;
+      --blue: #1d4ed8;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Zen Maru Gothic', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
-      background: var(--paper);
-      color: var(--s8);
-      line-height: 1.75;
-      font-size: 16px;
+      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.7;
     }
 
-    /* ──────────── ヘッダー ──────────── */
-    .top-bar {
-      background: var(--g9);
-      color: var(--wh);
-      padding: 0 20px;
-      height: 52px;
-      display: flex;
-      align-items: center;
+    /* ────── ナビゲーション ────── */
+    .nav {
       position: sticky;
       top: 0;
-      z-index: 200;
-      box-shadow: 0 2px 10px rgba(0,0,0,.25);
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
     }
-    .top-bar-inner {
-      width: min(1080px, 100%);
-      margin: 0 auto;
+    .nav-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-    }
-    .top-logo {
-      font-size: 14px;
-      font-weight: 700;
-      color: rgba(255,255,255,.9);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .top-badge {
-      background: rgba(255,255,255,.15);
-      border: 1px solid rgba(255,255,255,.3);
-      color: var(--wh);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 2px 12px;
-      border-radius: 20px;
-    }
-
-    /* ──────────── ヒーロー ──────────── */
-    .hero {
-      background: linear-gradient(140deg, var(--g9) 0%, #1a6b3d 50%, #2d9f5e 100%);
-      color: var(--wh);
-      padding: 52px 20px 44px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: "🌿";
-      position: absolute;
-      right: -10px;
-      top: -30px;
-      font-size: 220px;
-      opacity: .07;
-      line-height: 1;
-      pointer-events: none;
-    }
-    .hero-inner {
-      width: min(1080px, 100%);
+      padding: 0 24px;
+      height: 56px;
+      max-width: 900px;
       margin: 0 auto;
-      position: relative;
+      gap: 16px;
     }
-    .hero-eyebrow {
+    .nav-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .nav-furikaeri {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255,255,255,.15);
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 20px;
-      padding: 4px 14px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .06em;
-      margin-bottom: 14px;
-    }
-    .hero h1 {
-      font-size: clamp(22px, 5vw, 36px);
-      font-weight: 800;
-      line-height: 1.25;
-      margin-bottom: 10px;
-    }
-    .hero-sub {
+      background: var(--green);
+      color: #fff;
       font-size: 14px;
-      opacity: .85;
-      margin-bottom: 28px;
-      max-width: 600px;
-    }
-
-    /* 生き物名前入力 */
-    .name-bar {
-      background: rgba(255,255,255,.12);
-      border: 2px solid rgba(255,255,255,.3);
-      border-radius: 12px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      max-width: 620px;
-    }
-    .name-bar label {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--wh);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .name-bar input {
-      flex: 1;
-      min-width: 180px;
-      background: rgba(255,255,255,.93);
-      border: none;
-      border-radius: 8px;
-      padding: 12px 16px;
-      font-family: inherit;
-      font-size: 16px;
       font-weight: 700;
-      color: var(--s8);
-      outline: none;
-      transition: box-shadow .15s;
-    }
-    .name-bar input:focus {
-      box-shadow: 0 0 0 3px var(--g5);
-    }
-    .name-bar-hint {
-      font-size: 12px;
-      color: rgba(255,255,255,.7);
-      margin-top: 8px;
-    }
-
-    /* ステップチップ */
-    .step-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 24px;
-    }
-    .step-chip {
-      background: rgba(255,255,255,.15);
-      border: 1px solid rgba(255,255,255,.3);
-      color: var(--wh);
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 6px;
       text-decoration: none;
+      white-space: nowrap;
       transition: background .15s;
     }
-    .step-chip:hover {
-      background: rgba(255,255,255,.25);
-    }
+    .nav-furikaeri:hover { background: var(--green-dark); }
 
-    /* ──────────── メインコンテンツ ──────────── */
-    .main {
-      width: min(1080px, 100%);
-      margin: 0 auto;
-      padding: 36px 20px 80px;
-    }
-
-    /* 使い方ガイド */
-    .howto {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      background: var(--wh);
-      border: 1px solid var(--s2);
-      border-radius: var(--radius);
-      padding: 20px 22px;
-      margin-bottom: 28px;
-      box-shadow: var(--shadow-sm);
-    }
-    .howto-item {
+    .nav-phases {
       display: flex;
-      gap: 12px;
-      align-items: flex-start;
+      gap: 4px;
+      padding: 0 24px 12px;
+      max-width: 900px;
+      margin: 0 auto;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
-    .howto-num {
-      width: 30px;
-      height: 30px;
-      background: var(--g7);
-      color: var(--wh);
+    .nav-phases::-webkit-scrollbar { display: none; }
+    .phase-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-decoration: none;
+      white-space: nowrap;
+      background: var(--bg);
+      transition: all .12s;
+    }
+    .phase-link:hover, .phase-link.active {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green-light);
+    }
+
+    /* ────── ヒーロー ────── */
+    .hero {
+      border-bottom: 1px solid var(--border);
+      padding: 48px 24px 40px;
+    }
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text-sub);
+      margin-bottom: 28px;
+    }
+
+    /* 生き物名入力 */
+    .name-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 520px;
+      flex-wrap: wrap;
+    }
+    .name-input-wrap label {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .name-input-wrap input {
+      flex: 1;
+      min-width: 200px;
+      height: 48px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      padding: 0 14px;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s;
+    }
+    .name-input-wrap input:focus { border-color: var(--green); }
+    .name-hint {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    /* ────── 使い方 ────── */
+    .howto {
+      padding: 24px;
+      max-width: 900px;
+      margin: 24px auto 0;
+    }
+    .howto-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-sub);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .howto-steps {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .howto-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-sub);
+    }
+    .howto-step-num {
+      width: 24px;
+      height: 24px;
+      background: var(--text);
+      color: #fff;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      font-size: 13px;
-      font-weight: 800;
+      font-size: 12px;
+      font-weight: 700;
       flex-shrink: 0;
     }
-    .howto-item strong { display: block; font-size: 13px; color: var(--s8); }
-    .howto-item span { font-size: 12px; color: var(--s6); }
+    .howto-step-arrow {
+      color: var(--border);
+      font-size: 18px;
+      font-weight: 300;
+    }
 
-    /* 約束バー */
+    /* ────── 約束 ────── */
     .promise {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      background: var(--g9);
-      color: var(--wh);
-      border-radius: var(--radius);
-      padding: 16px 20px;
-      margin-bottom: 36px;
-      flex-wrap: wrap;
+      margin: 0 24px;
+      max-width: 852px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 14px 18px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-left: 4px solid #dc2626;
+      border-radius: 0 6px 6px 0;
+      font-size: 14px;
+      color: var(--text);
+      margin-top: 20px;
+      margin-bottom: 4px;
     }
-    .promise-icon {
-      font-size: 22px;
-      flex-shrink: 0;
-    }
-    .promise strong { font-size: 15px; display: block; margin-bottom: 2px; }
-    .promise span { font-size: 13px; opacity: .8; }
+    .promise strong { color: #dc2626; }
 
-    /* ──────────── フェーズセクション ──────────── */
-    .phase {
-      margin-bottom: 60px;
-      scroll-margin-top: 70px;
+    /* ────── メインコンテンツ ────── */
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 8px 24px 80px;
+    }
+
+    /* ────── フェーズセクション ────── */
+    .phase-section {
+      margin-top: 52px;
+      scroll-margin-top: 110px;
     }
     .phase-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
       margin-bottom: 20px;
-      padding-bottom: 14px;
-      border-bottom: 2px solid var(--s2);
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--text);
     }
-    .phase-num {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      font-size: 20px;
-      flex-shrink: 0;
+    .phase-num-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-sub);
+      letter-spacing: .08em;
+      margin-bottom: 4px;
     }
     .phase-header h2 {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--g9);
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.2;
     }
-    .phase-sub { font-size: 13px; color: var(--s6); margin-top: 2px; }
-    .jikan-tag {
-      display: inline-flex;
-      align-items: center;
-      background: var(--g1);
-      color: var(--g7);
-      font-size: 11px;
-      font-weight: 800;
+    .phase-jikan {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      background: var(--green-light);
+      border: 1px solid var(--green-border);
+      border-radius: 4px;
       padding: 2px 10px;
-      border-radius: 20px;
-      margin-left: 8px;
+    }
+    .phase-desc {
+      margin-top: 8px;
+      font-size: 15px;
+      color: var(--text-sub);
     }
 
-    /* ──────────── プロンプトカード ──────────── */
+    /* ────── プロンプトカード ────── */
     .pcard {
-      background: var(--wh);
-      border: 1px solid var(--s2);
-      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 18px;
-      display: grid;
-      grid-template-columns: 7px 1fr;
+      margin-bottom: 24px;
+      background: var(--bg);
     }
-    .pcard-strip { }
-    .pcard-body { padding: 22px 24px; }
-
+    .pcard-head {
+      padding: 20px 24px 0;
+    }
     .pcard-label {
-      font-size: 11px;
-      font-weight: 800;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-sub);
       letter-spacing: .06em;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }
     .pcard-title {
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--s8);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text);
       line-height: 1.35;
-      margin-bottom: 7px;
+      margin-bottom: 6px;
     }
     .pcard-desc {
-      font-size: 13px;
-      color: var(--s6);
-      margin-bottom: 16px;
+      font-size: 14px;
+      color: var(--text-sub);
       line-height: 1.7;
+      margin-bottom: 16px;
     }
 
     /* プロンプト本文 */
+    .prompt-wrap {
+      background: var(--bg-gray);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+    }
     .prompt-text {
-      background: #f7fafc;
-      border: 1px solid #d1dce9;
-      border-radius: 10px;
-      padding: 16px 18px;
+      width: 100%;
+      background: transparent;
+      border: none;
       font-family: inherit;
-      font-size: 14px;
-      color: #1e3050;
+      font-size: 15px;
+      color: var(--text);
       line-height: 1.85;
       white-space: pre-wrap;
-      width: 100%;
       resize: none;
       overflow: hidden;
-      min-height: 140px;
-    }
-    .prompt-text:focus {
-      outline: 2px solid var(--g5);
+      outline: none;
+      min-height: 120px;
     }
 
-    /* アクション行 */
+    /* アクション */
     .pcard-actions {
+      padding: 16px 24px;
       display: flex;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
       align-items: center;
     }
-    .btn {
+    .btn-copy {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      min-height: 42px;
-      padding: 9px 20px;
-      border: 1px solid transparent;
-      border-radius: 9px;
+      gap: 8px;
+      height: 52px;
+      padding: 0 28px;
+      background: var(--text);
+      color: #fff;
       font-family: inherit;
-      font-size: 14px;
-      font-weight: 800;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
       text-decoration: none;
-      transition: transform .12s, box-shadow .12s;
+      transition: background .12s;
       white-space: nowrap;
     }
-    .btn:hover { transform: translateY(-1px); }
+    .btn-copy:hover { background: #374151; }
+    .btn-copy.done { background: var(--green); }
 
-    .btn-copy {
-      background: var(--g9);
-      color: var(--wh);
-      box-shadow: 0 6px 18px rgba(20,83,45,.22);
-    }
-    .btn-copy.copied {
-      background: var(--g7);
-    }
     .btn-gemini {
-      background: #1a73e8;
-      color: var(--wh);
-      box-shadow: 0 6px 18px rgba(26,115,232,.22);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 52px;
+      padding: 0 28px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .12s;
+      white-space: nowrap;
     }
-    .btn-outline {
-      background: var(--wh);
-      border-color: var(--s2);
-      color: var(--s8);
-    }
-    .copy-note {
-      font-size: 12px;
-      color: var(--s4);
-    }
-
-    /* ヒントボックス */
-    .hint {
-      margin-top: 14px;
-      padding: 12px 16px;
-      border-radius: 0 10px 10px 0;
+    .btn-gemini:hover { border-color: var(--text); }
+    .btn-note {
       font-size: 13px;
-      line-height: 1.7;
+      color: var(--text-sub);
     }
-    .hint-amber {
-      background: var(--a0);
-      border-left: 4px solid var(--a6);
-      color: var(--s8);
-    }
-    .hint-amber strong { color: var(--a6); display: block; font-size: 12px; font-weight: 800; margin-bottom: 4px; }
-    .hint-purple {
-      background: var(--p1);
-      border-left: 4px solid var(--p7);
-      color: var(--s8);
-    }
-    .hint-purple strong { color: var(--p7); display: block; font-size: 12px; font-weight: 800; margin-bottom: 4px; }
-    .hint-blue {
-      background: var(--b0);
-      border-left: 4px solid var(--b7);
-      color: var(--s8);
-    }
-    .hint-blue strong { color: var(--b7); display: block; font-size: 12px; font-weight: 800; margin-bottom: 4px; }
-    .hint-red {
-      background: #fff1f2;
-      border-left: 4px solid #be123c;
-      color: var(--s8);
-    }
-    .hint-red strong { color: #be123c; display: block; font-size: 12px; font-weight: 800; margin-bottom: 4px; }
 
-    /* ファクトチェックステップ */
-    .fc-steps {
+    /* ヒント */
+    .pcard-hint {
+      margin: 0 24px 20px;
+      padding: 12px 16px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .hint-green {
+      background: var(--green-light);
+      border-left: 3px solid var(--green);
+    }
+    .hint-yellow {
+      background: #fefce8;
+      border-left: 3px solid #ca8a04;
+    }
+    .hint-purple {
+      background: #faf5ff;
+      border-left: 3px solid #7c3aed;
+    }
+    .hint-red {
+      background: #fef2f2;
+      border-left: 3px solid #dc2626;
+    }
+    .pcard-hint strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text-sub);
+    }
+
+    /* ファクトチェック ステップ */
+    .fc-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 18px;
+      gap: 8px;
+      margin-bottom: 20px;
     }
-    .fc-step {
-      background: var(--b0);
-      border: 1px solid var(--b1);
-      border-radius: 10px;
-      padding: 12px 14px;
+    .fc-item {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px;
+      background: var(--bg);
     }
-    .fc-step-num { font-size: 11px; font-weight: 800; color: var(--b7); margin-bottom: 4px; }
-    .fc-step strong { display: block; font-size: 13px; color: var(--s8); margin-bottom: 2px; }
-    .fc-step span { font-size: 12px; color: var(--s6); }
+    .fc-item-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-sub);
+      letter-spacing: .06em;
+      margin-bottom: 6px;
+    }
+    .fc-item strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .fc-item span { font-size: 13px; color: var(--text-sub); }
 
-    /* 振り返りフォームセクション */
-    .form-cta {
-      background: var(--g0);
-      border: 2px solid var(--g7);
-      border-radius: var(--radius);
-      padding: 24px 26px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
-    }
-    .form-cta h3 { font-size: 16px; font-weight: 800; color: var(--g9); margin-bottom: 4px; }
-    .form-cta p { font-size: 13px; color: var(--s6); }
-
-    /* ──────────── トースト ──────────── */
+    /* ────── トースト ────── */
     #toast {
       position: fixed;
       left: 50%;
@@ -478,145 +450,132 @@
       z-index: 9999;
       transform: translate(-50%, 80px);
       opacity: 0;
-      background: var(--g9);
-      color: var(--wh);
-      padding: 13px 24px;
-      border-radius: 10px;
-      font-weight: 800;
+      background: var(--text);
+      color: #fff;
+      padding: 14px 26px;
+      border-radius: 6px;
+      font-weight: 700;
       font-size: 15px;
-      box-shadow: 0 8px 28px rgba(0,0,0,.22);
-      transition: transform .22s ease, opacity .22s ease;
+      transition: transform .2s, opacity .2s;
       white-space: nowrap;
+      pointer-events: none;
     }
-    #toast.show {
-      transform: translate(-50%, 0);
-      opacity: 1;
-    }
+    #toast.show { transform: translate(-50%, 0); opacity: 1; }
 
-    /* ──────────── フッター ──────────── */
+    /* ────── フッター ────── */
     footer {
-      background: var(--wh);
-      border-top: 1px solid var(--s2);
-      padding: 24px 20px;
+      border-top: 1px solid var(--border);
+      padding: 24px;
       text-align: center;
-      font-size: 12px;
-      color: var(--s4);
+      font-size: 13px;
+      color: var(--text-sub);
       line-height: 1.8;
     }
 
-    /* ──────────── レスポンシブ ──────────── */
-    @media (max-width: 760px) {
-      .howto { grid-template-columns: 1fr 1fr; }
-      .fc-steps { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 520px) {
-      .hero { padding: 36px 16px 32px; }
-      .main { padding: 24px 14px 60px; }
-      .howto { grid-template-columns: 1fr; }
-      .fc-steps { grid-template-columns: 1fr; }
-      .name-bar { flex-direction: column; align-items: stretch; }
-      .pcard-body { padding: 18px 16px; }
-      .form-cta { flex-direction: column; }
+    /* ────── レスポンシブ ────── */
+    @media (max-width: 640px) {
+      .hero { padding: 32px 16px 28px; }
+      .main { padding: 8px 16px 60px; }
+      .howto { padding: 20px 16px; }
+      .promise { margin: 12px 16px 0; }
+      .fc-grid { grid-template-columns: 1fr 1fr; }
+      .pcard-head { padding: 16px 16px 0; }
+      .prompt-wrap { padding: 16px; }
+      .pcard-actions { padding: 14px 16px; }
+      .pcard-hint { margin: 0 16px 16px; }
+      .btn-copy, .btn-gemini { height: 48px; font-size: 15px; padding: 0 22px; }
+      .nav-top { padding: 0 16px; }
+      .nav-phases { padding: 0 16px 10px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ヘッダー -->
-<header class="top-bar">
-  <div class="top-bar-inner">
-    <span class="top-logo">🌿 わたしのクラスの「生き物図かん」</span>
-    <span class="top-badge">Gemini学習サポート</span>
+<!-- ナビゲーション -->
+<nav class="nav">
+  <div class="nav-top">
+    <span class="nav-title">生き物図かん</span>
+    <a class="nav-furikaeri"
+       href="https://docs.google.com/forms/d/e/1FAIpQLSdj32DfB5hld4JUuGmfbClQm3pQgnrJX-ScoAU-9nU9w606xg/viewform?usp=header"
+       target="_blank" rel="noopener">
+      今日の振り返り ↗
+    </a>
   </div>
-</header>
+  <div class="nav-phases">
+    <a class="phase-link" href="#p1">① 生き物を選ぶ</a>
+    <a class="phase-link" href="#p2">② 調べる・確かめる</a>
+    <a class="phase-link" href="#p3">③ 構成メモを作る</a>
+    <a class="phase-link" href="#p4">④ もっとよくする</a>
+  </div>
+</nav>
 
 <!-- ヒーロー -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">🤖 4年国語｜書くこと</div>
-    <h1>Geminiを使って、<br>リーフレットを作ろう！</h1>
-    <p class="hero-sub">プロンプトをコピーして Gemini に貼り付けると、AIとお話しながら学習を進められるよ。</p>
+    <p class="hero-label">4年 国語｜わたしのクラスの「生き物図かん」</p>
+    <h1>Geminiを使って<br>リーフレットを作ろう</h1>
+    <p class="hero-sub">プロンプトをコピーして Gemini に貼り付けると、AIとお話しながら学習を進められます。</p>
 
-    <!-- 生き物名前入力 -->
-    <div class="name-bar">
-      <label for="cname">🐛 わたしの生き物：</label>
-      <input type="text" id="cname" placeholder="例：カブトムシ、メダカ、アゲハチョウ…" maxlength="30" autocomplete="off">
+    <div class="name-input-wrap">
+      <label for="cname">調べる生き物：</label>
+      <input type="text" id="cname" placeholder="例：カブトムシ" maxlength="30" autocomplete="off">
     </div>
-    <p class="name-bar-hint">※ 入力すると、下のプロンプトが自動で変わります</p>
-
-    <div class="step-chips">
-      <a href="#phase1" class="step-chip">① 生き物を選ぶ</a>
-      <a href="#phase2" class="step-chip">② 調べる・確かめる</a>
-      <a href="#phase3" class="step-chip">③ 構成メモを作る</a>
-      <a href="#phase4" class="step-chip">④ ブラッシュアップ</a>
-    </div>
+    <p class="name-hint">入力すると、下のプロンプトが自動で変わります</p>
   </div>
 </section>
 
-<!-- メイン -->
+<!-- 使い方 -->
+<div class="howto">
+  <p class="howto-label">使い方</p>
+  <div class="howto-steps">
+    <div class="howto-step">
+      <div class="howto-step-num">1</div>
+      <span>コピーする</span>
+    </div>
+    <div class="howto-step-arrow">›</div>
+    <div class="howto-step">
+      <div class="howto-step-num">2</div>
+      <span>Gemini を開く</span>
+    </div>
+    <div class="howto-step-arrow">›</div>
+    <div class="howto-step">
+      <div class="howto-step-num">3</div>
+      <span>貼り付けて送る（Ctrl＋V）</span>
+    </div>
+    <div class="howto-step-arrow">›</div>
+    <div class="howto-step">
+      <div class="howto-step-num">4</div>
+      <span>返事を読んで対話を続ける</span>
+    </div>
+  </div>
+</div>
+
+<!-- 約束 -->
+<p class="promise">
+  <strong>AIが言ったことをそのまま写すのはやめよう。</strong>　AIは考えの手助けをするもの。内容は必ず自分でも確かめて、情報のもと（出典）を書こう。
+</p>
+
+<!-- メインコンテンツ -->
 <main class="main">
 
-  <!-- 使い方ガイド -->
-  <div class="howto">
-    <div class="howto-item">
-      <div class="howto-num">1</div>
-      <div>
-        <strong>プロンプトをコピー</strong>
-        <span>「コピーする」ボタンを押す</span>
-      </div>
-    </div>
-    <div class="howto-item">
-      <div class="howto-num">2</div>
-      <div>
-        <strong>Geminiを開く</strong>
-        <span>「Geminiで開く」ボタンを押す</span>
-      </div>
-    </div>
-    <div class="howto-item">
-      <div class="howto-num">3</div>
-      <div>
-        <strong>貼り付けて送る</strong>
-        <span>入力欄で Ctrl＋V → 送信</span>
-      </div>
-    </div>
-    <div class="howto-item">
-      <div class="howto-num">4</div>
-      <div>
-        <strong>対話を続ける</strong>
-        <span>返事を読んで、自分の言葉で答えよう</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- 約束バー -->
-  <div class="promise">
-    <div class="promise-icon">⚠️</div>
-    <div>
-      <strong>AIが言ったことをそのまま写すのはやめよう！</strong>
-      <span>AIは考えの手助けをするもの。内容は必ず自分でも確かめてから使おう。情報のもと（出典）を書くことも忘れずに。</span>
-    </div>
-  </div>
-
-  <!-- ============================================== -->
-  <!-- PHASE 1: 生き物を選ぶ -->
-  <!-- ============================================== -->
-  <section class="phase" id="phase1">
+  <!-- ================================== -->
+  <!-- ① 生き物を選ぶ -->
+  <!-- ================================== -->
+  <section class="phase-section" id="p1">
     <div class="phase-header">
-      <div class="phase-num" style="background:#dcfce7;">🦋</div>
-      <div>
-        <h2>① 生き物を選ぶ<span class="jikan-tag">第2時</span></h2>
-        <p class="phase-sub">どんな生き物を紹介するか決めよう。決められないときにこのプロンプトを使ってね。</p>
-      </div>
+      <p class="phase-num-label">STEP 01</p>
+      <h2>生き物を選ぶ</h2>
+      <span class="phase-jikan">第2時</span>
+      <p class="phase-desc">どんな生き物を紹介するか決めよう。決められないときにこのプロンプトを使ってね。</p>
     </div>
 
-    <!-- カード：生き物えらび（対話型） -->
     <div class="pcard">
-      <div class="pcard-strip" style="background:#22c55e;"></div>
-      <div class="pcard-body">
-        <div class="pcard-label" style="color:#15803d;">🐛 生き物えらび（対話型）</div>
-        <div class="pcard-title">どんな生き物にするか、いっしょに決めてもらおう</div>
-        <div class="pcard-desc">「どんな生き物を選んだらいいかわからない」というときに使おう。Gemini が質問してくれて、あなたにぴったりの生き物を提案してくれるよ。</div>
-
+      <div class="pcard-head">
+        <p class="pcard-label">生き物えらび（対話型）</p>
+        <p class="pcard-title">どんな生き物にするか、いっしょに決めてもらおう</p>
+        <p class="pcard-desc">「どんな生き物を選んだらいいかわからない」というときに。Gemini がいくつか質問してくれて、あなたにぴったりの生き物を提案してくれます。</p>
+      </div>
+      <div class="prompt-wrap">
         <textarea class="prompt-text" id="p-select" readonly>わたしは小学4年生です。
 国語の授業で、好きな生き物についてリーフレットを書くことになりました。
 でも、どんな生き物を選んだらいいかわかりません。
@@ -630,65 +589,60 @@
 ・おすすめの理由
 ・図かんや本で調べやすいかどうか
 も教えてください。</textarea>
-
-        <div class="pcard-actions">
-          <button class="btn btn-copy" onclick="copyPrompt('p-select', this)">📋 コピーする</button>
-          <a class="btn btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">✨ Geminiで開く</a>
-          <span class="copy-note">コピー → Gemini に貼り付け → 送信</span>
-        </div>
-
-        <div class="hint hint-amber">
-          <strong>💡 ポイント</strong>
-          Gemini が質問してきたら、自分の言葉で答えよう。「虫が好き」「かわいい動物が気になる」「海の生き物を調べたい」など、思ったままに話してOK！会話を続けると、ぴったりの生き物が見つかるよ。
-        </div>
+      </div>
+      <div class="pcard-actions">
+        <button class="btn-copy" onclick="copyPrompt('p-select', this)">コピーする</button>
+        <a class="btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiで開く ↗</a>
+      </div>
+      <div class="pcard-hint hint-green">
+        <strong>ポイント</strong>
+        Gemini が質問してきたら、自分の言葉で答えよう。「虫が好き」「かわいい動物が気になる」「海の生き物を調べたい」など、思ったままに話してOK。
       </div>
     </div>
   </section>
 
-  <!-- ============================================== -->
-  <!-- PHASE 2: 調べる・確かめる -->
-  <!-- ============================================== -->
-  <section class="phase" id="phase2">
+  <!-- ================================== -->
+  <!-- ② 調べる・確かめる -->
+  <!-- ================================== -->
+  <section class="phase-section" id="p2">
     <div class="phase-header">
-      <div class="phase-num" style="background:#dbeafe;">🔍</div>
-      <div>
-        <h2>② 調べる・確かめる<span class="jikan-tag">第2〜3時</span></h2>
-        <p class="phase-sub">何を調べるか、どうやって確かめるかを考えよう。AIの情報は必ず自分でも確認すること！</p>
-      </div>
+      <p class="phase-num-label">STEP 02</p>
+      <h2>調べる・確かめる</h2>
+      <span class="phase-jikan">第2〜3時</span>
+      <p class="phase-desc">何を調べるか、どうやって確かめるかを考えよう。AIの情報は必ず自分でも確認すること！</p>
     </div>
 
-    <!-- ファクトチェックのステップ -->
-    <div class="fc-steps">
-      <div class="fc-step">
-        <div class="fc-step-num">STEP 1</div>
+    <div class="fc-grid">
+      <div class="fc-item">
+        <p class="fc-item-num">STEP 1</p>
         <strong>AIに聞く</strong>
         <span>検索キーワードや情報をもらう</span>
       </div>
-      <div class="fc-step">
-        <div class="fc-step-num">STEP 2</div>
+      <div class="fc-item">
+        <p class="fc-item-num">STEP 2</p>
         <strong>検索する</strong>
-        <span>キーワードでGoogle検索。AI検索モードも活用しよう</span>
+        <span>Googleでキーワード検索（AI検索モードも使ってみよう）</span>
       </div>
-      <div class="fc-step">
-        <div class="fc-step-num">STEP 3</div>
+      <div class="fc-item">
+        <p class="fc-item-num">STEP 3</p>
         <strong>元の情報を確かめる</strong>
         <span>検索結果の元サイト（図かん・公式）を自分で開いて読む</span>
       </div>
-      <div class="fc-step">
-        <div class="fc-step-num">STEP 4</div>
+      <div class="fc-item">
+        <p class="fc-item-num">STEP 4</p>
         <strong>出典を書く</strong>
         <span>本の名前・ページ・URLなどをメモする</span>
       </div>
     </div>
 
-    <!-- カード：検索キーワードを決めよう -->
+    <!-- カード：検索キーワード -->
     <div class="pcard">
-      <div class="pcard-strip" style="background:#3b82f6;"></div>
-      <div class="pcard-body">
-        <div class="pcard-label" style="color:#1d4ed8;">🔍 調べる計画</div>
-        <div class="pcard-title">何を調べる？　どんなキーワードで検索する？</div>
-        <div class="pcard-desc">「何て検索したらいいかわからない」というときに使おう。調べることと検索キーワードを一緒に考えてもらえるよ。</div>
-
+      <div class="pcard-head">
+        <p class="pcard-label">調べる計画</p>
+        <p class="pcard-title">何を調べる？　どんなキーワードで検索する？</p>
+        <p class="pcard-desc">「何て検索したらいいかわからない」というときに。調べることと検索キーワードをいっしょに考えてもらえます。</p>
+      </div>
+      <div class="prompt-wrap">
         <textarea class="prompt-text" id="p-search" readonly>わたしは小学4年生です。
 「{{いきもの}}」についてリーフレットを書くために調べています。
 
@@ -703,27 +657,25 @@
 信らいできる情報のもと（図かん・国や都道府県の公式サイトなど）も教えてください。
 
 小学4年生にわかることばで教えてください。</textarea>
-
-        <div class="pcard-actions">
-          <button class="btn btn-copy" onclick="copyPrompt('p-search', this)">📋 コピーする</button>
-          <a class="btn btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">✨ Geminiで開く</a>
-        </div>
-
-        <div class="hint hint-blue">
-          <strong>💡 Google で検索するときのコツ（Chromebook）</strong>
-          もらったキーワードをそのままGoogleで検索してみよう。検索結果ページの上にある「AI」ボタン（AI検索モード）を押すと、まとめを読めるよ。でも右側に出てくる「ウェブサイト」のリンクも必ず開いて、元の情報を確かめること！
-        </div>
+      </div>
+      <div class="pcard-actions">
+        <button class="btn-copy" onclick="copyPrompt('p-search', this)">コピーする</button>
+        <a class="btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiで開く ↗</a>
+      </div>
+      <div class="pcard-hint hint-green">
+        <strong>Chromebook で Google 検索するときのコツ</strong>
+        もらったキーワードをそのまま Google で検索してみよう。検索結果ページの「AI」ボタン（AI検索モード）を押すとまとめが読める。でも右側に出てくるウェブサイトのリンクも必ず自分で開いて、元の情報を確かめよう。
       </div>
     </div>
 
     <!-- カード：ファクトチェック -->
     <div class="pcard">
-      <div class="pcard-strip" style="background:#06b6d4;"></div>
-      <div class="pcard-body">
-        <div class="pcard-label" style="color:#0e7490;">✅ ファクトチェック</div>
-        <div class="pcard-title">調べた内容が正しいか確かめよう</div>
-        <div class="pcard-desc">AIに調べてもらった内容をそのまま使うのはNG！「本当かな？」と思ったらこのプロンプトで確かめよう。下の【調べた内容】の部分に、確かめたいことを書いてから送ってね。</div>
-
+      <div class="pcard-head">
+        <p class="pcard-label">ファクトチェック</p>
+        <p class="pcard-title">調べた内容が正しいか確かめよう</p>
+        <p class="pcard-desc">「本当かな？」と思ったときに。下の【調べた内容】の部分に確かめたいことを書いてから送ろう。</p>
+      </div>
+      <div class="prompt-wrap">
         <textarea class="prompt-text" id="p-factcheck" readonly>わたしは小学4年生です。
 「{{いきもの}}」について次のことを調べました。
 
@@ -737,45 +689,42 @@
 ③ 信らいできる情報のもと（図かん・公式サイトなど）を教えてください。
 
 小学4年生にわかることばで教えてください。</textarea>
-
-        <div class="pcard-actions">
-          <button class="btn btn-copy" onclick="copyPrompt('p-factcheck', this)">📋 コピーする</button>
-          <a class="btn btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">✨ Geminiで開く</a>
-          <span class="copy-note">【調べた内容】の部分を書き直してから送ろう</span>
-        </div>
-
-        <div class="hint hint-red">
-          <strong>⚠️ 大切なこと</strong>
-          AIが「正しい」と言っても、100%信じないこと！AIも間違えることがあるよ。必ず図かんや公式サイトでもう一度確かめよう。使った情報のもと（出典）を書くことも忘れずに。
-        </div>
+      </div>
+      <div class="pcard-actions">
+        <button class="btn-copy" onclick="copyPrompt('p-factcheck', this)">コピーする</button>
+        <a class="btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiで開く ↗</a>
+        <span class="btn-note">【調べた内容】の部分を書き直してから送ろう</span>
+      </div>
+      <div class="pcard-hint hint-red">
+        <strong>大切なこと</strong>
+        AIが「正しい」と言っても100%信じないこと。AIも間違えることがある。図かんや公式サイトでもう一度確かめよう。使った情報のもと（出典）を書くことも忘れずに。
       </div>
     </div>
   </section>
 
-  <!-- ============================================== -->
-  <!-- PHASE 3: 構成メモを作る -->
-  <!-- ============================================== -->
-  <section class="phase" id="phase3">
+  <!-- ================================== -->
+  <!-- ③ 構成メモを作る -->
+  <!-- ================================== -->
+  <section class="phase-section" id="p3">
     <div class="phase-header">
-      <div class="phase-num" style="background:#ede9fe;">📝</div>
-      <div>
-        <h2>③ 構成メモを作る<span class="jikan-tag">第3〜4時</span></h2>
-        <p class="phase-sub">集めた材料を整理して、リーフレットの組み立てを考えよう。</p>
-      </div>
+      <p class="phase-num-label">STEP 03</p>
+      <h2>構成メモを作る</h2>
+      <span class="phase-jikan">第3〜4時</span>
+      <p class="phase-desc">集めた材料を整理して、リーフレットの組み立てを考えよう。</p>
     </div>
 
-    <!-- カード：対話で構成メモを作る -->
+    <!-- カード：対話で構成メモ -->
     <div class="pcard">
-      <div class="pcard-strip" style="background:#8b5cf6;"></div>
-      <div class="pcard-body">
-        <div class="pcard-label" style="color:#6d28d9;">📝 構成メモ（対話型）</div>
-        <div class="pcard-title">調べた情報を段落に整理しよう</div>
-        <div class="pcard-desc">集めたメモをどの段落に入れたらよいか、AIといっしょに考えよう。一つずつ質問してくれるので、会話しながら構成メモを完成させよう。</div>
-
+      <div class="pcard-head">
+        <p class="pcard-label">構成メモ（対話型）</p>
+        <p class="pcard-title">調べた情報を段落に整理しよう</p>
+        <p class="pcard-desc">集めたメモをどの段落に入れたらよいか、AIといっしょに考えよう。一つずつ質問してくれるので、会話しながら構成メモを完成させよう。</p>
+      </div>
+      <div class="prompt-wrap">
         <textarea class="prompt-text" id="p-comp" readonly>わたしは小学4年生です。
 「{{いきもの}}」についてリーフレットを書きます。
 
-リーフレットは次のような組み立てで書きます。
+リーフレットの組み立ては次のとおりです。
 ① はじめ：この生き物を紹介する文と、一番伝えたいこと
 ② なか①：とくちょう（1つめ）
 ③ なか②：とくちょう（2つめ）
@@ -786,32 +735,25 @@
 一度に一つずつ質問してください。
 どの情報をどの段落に入れたらよいかを、いっしょに考えてください。
 最後に、段落ごとにまとめた「構成メモ」を表の形で出してください。</textarea>
-
-        <div class="pcard-actions">
-          <button class="btn btn-copy" onclick="copyPrompt('p-comp', this)">📋 コピーする</button>
-          <a class="btn btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">✨ Geminiで開く</a>
-        </div>
-
-        <div class="hint hint-purple">
-          <strong>🎨 キャンバス機能を使ってみよう！（Gemini）</strong>
-          Gemini の入力欄にある「＋」マークをタップして「キャンバス」を選ぶと、表や図を使って情報を整理できるよ。構成メモを視覚的に整理したいときに試してみよう！
-        </div>
-
-        <div class="hint hint-amber" style="margin-top:8px;">
-          <strong>💡 使い方のポイント</strong>
-          調べたことを全部まとめて話す必要はないよ。「〇〇が△△ということがわかった」という形で伝えるだけでOK。Gemini が「それは②なか①に入れるとよいですね」と整理してくれるよ。
-        </div>
+      </div>
+      <div class="pcard-actions">
+        <button class="btn-copy" onclick="copyPrompt('p-comp', this)">コピーする</button>
+        <a class="btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiで開く ↗</a>
+      </div>
+      <div class="pcard-hint hint-purple">
+        <strong>キャンバス機能を使ってみよう（Gemini）</strong>
+        Gemini の入力欄の「＋」マークをタップして「キャンバス」を選ぶと、表や図を使って情報を整理できる。構成メモを視覚的に整理したいときにおすすめ。
       </div>
     </div>
 
-    <!-- カード：一番伝えたいことを決める -->
+    <!-- カード：テーマを決める -->
     <div class="pcard">
-      <div class="pcard-strip" style="background:#a78bfa;"></div>
-      <div class="pcard-body">
-        <div class="pcard-label" style="color:#6d28d9;">💡 テーマを決める</div>
-        <div class="pcard-title">一番伝えたいことは何？　テーマを決めよう</div>
-        <div class="pcard-desc">調べたことがたくさんあって絞れないときに使おう。「はじめ」に書く「一番伝えたいこと」を一緒に考えてもらえるよ。</div>
-
+      <div class="pcard-head">
+        <p class="pcard-label">テーマを決める</p>
+        <p class="pcard-title">一番伝えたいことは何か、決めよう</p>
+        <p class="pcard-desc">調べたことがたくさんあって絞れないときに。「はじめ」の段落に書く「一番伝えたいこと」をいっしょに考えてもらえる。</p>
+      </div>
+      <div class="prompt-wrap">
         <textarea class="prompt-text" id="p-theme" readonly>わたしは小学4年生です。
 「{{いきもの}}」についてリーフレットを書きます。
 
@@ -821,41 +763,38 @@
 ・（調べたこと3）
 
 この中から「一番伝えたいこと」を一つ決めたいです。
-どれが「はじめ」の段落に書くのにぴったりですか？
-理由も教えてください。
+どれが「はじめ」の段落に書くのにぴったりですか？理由も教えてください。
 
-また、「はじめ」の段落の書き出しの例文を1つ見せてください。
+また「はじめ」の段落の書き出しの例文を1つ見せてください。
 小学4年生にわかることばで書いてください。</textarea>
-
-        <div class="pcard-actions">
-          <button class="btn btn-copy" onclick="copyPrompt('p-theme', this)">📋 コピーする</button>
-          <a class="btn btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">✨ Geminiで開く</a>
-          <span class="copy-note">（調べたこと）の部分を自分で書き直してから送ろう</span>
-        </div>
+      </div>
+      <div class="pcard-actions">
+        <button class="btn-copy" onclick="copyPrompt('p-theme', this)">コピーする</button>
+        <a class="btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiで開く ↗</a>
+        <span class="btn-note">（調べたこと）の部分を書き直してから送ろう</span>
       </div>
     </div>
   </section>
 
-  <!-- ============================================== -->
-  <!-- PHASE 4: ブラッシュアップ -->
-  <!-- ============================================== -->
-  <section class="phase" id="phase4">
+  <!-- ================================== -->
+  <!-- ④ もっとよくする -->
+  <!-- ================================== -->
+  <section class="phase-section" id="p4">
     <div class="phase-header">
-      <div class="phase-num" style="background:#fef9c3;">✨</div>
-      <div>
-        <h2>④ ブラッシュアップ<span class="jikan-tag">第7時</span></h2>
-        <p class="phase-sub">書いたリーフレットをもっとよくしよう。AIに評価してもらって改善のヒントをもらおう。</p>
-      </div>
+      <p class="phase-num-label">STEP 04</p>
+      <h2>もっとよくする</h2>
+      <span class="phase-jikan">第5〜7時</span>
+      <p class="phase-desc">書いたリーフレットをもっとよくしよう。AIに評価してもらって改善のヒントをもらおう。</p>
     </div>
 
-    <!-- カード：リーフレット評価 -->
+    <!-- カード：評価 -->
     <div class="pcard">
-      <div class="pcard-strip" style="background:#f59e0b;"></div>
-      <div class="pcard-body">
-        <div class="pcard-label" style="color:#d97706;">✨ ブラッシュアップ</div>
-        <div class="pcard-title">リーフレットのよいところと改善ポイントを教えてもらおう</div>
-        <div class="pcard-desc">書いた文章をAIに読んでもらって、4年生の視点でアドバイスをもらおう。プロンプトの下の「---」の下に書いた文章を貼り付けてから使おう。</div>
-
+      <div class="pcard-head">
+        <p class="pcard-label">ブラッシュアップ</p>
+        <p class="pcard-title">よいところと改善ポイントを教えてもらおう</p>
+        <p class="pcard-desc">書いた文章をAIに読んでもらって、4年生の視点でアドバイスをもらおう。「---」の下に書いた文章を貼り付けてから使おう。</p>
+      </div>
+      <div class="prompt-wrap">
         <textarea class="prompt-text" id="p-polish" readonly>わたしは小学4年生です。
 「{{いきもの}}」についてリーフレットを書きました。
 小学4年生の友達として読んで、次のことを教えてください。
@@ -863,34 +802,32 @@
 ① よいところを2つ教えてください（うれしくなることばで）
 ② もっとよくなる提案を1つ教えてください（やさしく教えてください）
 ③ 出典（情報のもと：本の名前・ページなど）はちゃんと書けていますか？
-④ 「はじめ」と「おわり」がつながっていますか？
+④ 「はじめ」と「おわり」はつながっていますか？
 ⑤ 段落ごとに一つのテーマだけ書けていますか？
 
 ---わたしが書いたリーフレット---
 
 （ここに書いた文章を貼り付けてください）</textarea>
-
-        <div class="pcard-actions">
-          <button class="btn btn-copy" onclick="copyPrompt('p-polish', this)">📋 コピーする</button>
-          <a class="btn btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">✨ Geminiで開く</a>
-          <span class="copy-note">「（ここに〜）」の部分に自分の文を貼り付けてから送ろう</span>
-        </div>
-
-        <div class="hint hint-amber">
-          <strong>💡 アドバイスをもらったあとは…</strong>
-          AIのアドバイスをそのまま写すのではなく、「この部分をこう直そう」と自分で考えて書き直そう。友達とも読み合って、AIと友達の両方のアドバイスを参考にするともっとよくなるよ！
-        </div>
+      </div>
+      <div class="pcard-actions">
+        <button class="btn-copy" onclick="copyPrompt('p-polish', this)">コピーする</button>
+        <a class="btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiで開く ↗</a>
+        <span class="btn-note">「（ここに〜）」の部分に自分の文を貼り付けてから送ろう</span>
+      </div>
+      <div class="pcard-hint hint-yellow">
+        <strong>アドバイスをもらったあとは</strong>
+        AIのアドバイスをそのまま写すのではなく、「この部分をこう直そう」と自分で考えて書き直そう。友達とも読み合って、AIと友達の両方のアドバイスを参考にするともっとよくなるよ。
       </div>
     </div>
 
-    <!-- カード：書き方のヒント -->
+    <!-- カード：書き方ヒント -->
     <div class="pcard">
-      <div class="pcard-strip" style="background:#fbbf24;"></div>
-      <div class="pcard-body">
-        <div class="pcard-label" style="color:#d97706;">✏️ 書き方のヒント</div>
-        <div class="pcard-title">「はじめ・なか・おわり」の書き方を教えてもらおう</div>
-        <div class="pcard-desc">「どうやって書いたらいいかわからない」というときに使おう。段落ごとの書き方のコツと例文を見せてもらえるよ。</div>
-
+      <div class="pcard-head">
+        <p class="pcard-label">書き方のヒント</p>
+        <p class="pcard-title">「はじめ・なか・おわり」の書き方を教えてもらおう</p>
+        <p class="pcard-desc">「どうやって書いたらいいかわからない」というときに。段落ごとの書き方のコツと例文を見せてもらえる。</p>
+      </div>
+      <div class="prompt-wrap">
         <textarea class="prompt-text" id="p-write" readonly>わたしは小学4年生です。
 「{{いきもの}}」についてリーフレットを書いています。
 
@@ -903,61 +840,41 @@
 
 例文は3〜5文くらいの長さにしてください。
 小学4年生にわかることばで書いてください。</textarea>
-
-        <div class="pcard-actions">
-          <button class="btn btn-copy" onclick="copyPrompt('p-write', this)">📋 コピーする</button>
-          <a class="btn btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">✨ Geminiで開く</a>
-          <span class="copy-note">（　）の部分を自分で書き直してから送ろう</span>
-        </div>
+      </div>
+      <div class="pcard-actions">
+        <button class="btn-copy" onclick="copyPrompt('p-write', this)">コピーする</button>
+        <a class="btn-gemini" href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiで開く ↗</a>
+        <span class="btn-note">（　）の部分を書き直してから送ろう</span>
       </div>
     </div>
   </section>
-
-  <!-- ============================================== -->
-  <!-- 振り返りフォーム -->
-  <!-- ============================================== -->
-  <div class="form-cta">
-    <div>
-      <h3>📋 今日の授業の振り返りをしよう</h3>
-      <p>毎時間終わりに振り返りフォームに記入しよう。第1〜9時、全部同じURLを使うよ。</p>
-    </div>
-    <a class="btn btn-copy"
-       href="https://docs.google.com/forms/d/e/1FAIpQLSdj32DfB5hld4JUuGmfbClQm3pQgnrJX-ScoAU-9nU9w606xg/viewform?usp=header"
-       target="_blank" rel="noopener">
-      📋 振り返りフォームを開く
-    </a>
-  </div>
 
 </main>
 
 <footer>
   <p>わたしのクラスの「生き物図かん」｜Gemini学習サポート</p>
   <p>4年国語（東京書籍 新編 新しい国語4年）｜神教材製作所</p>
-  <p style="margin-top:6px;">AIが言ったことは、必ず図かんや公式サイトで確かめてから使おう。</p>
 </footer>
 
-<!-- トースト -->
-<div id="toast">📋 コピーできました！　Gemini に貼り付けよう 🎉</div>
+<div id="toast">コピーしました。Gemini に貼り付けよう。</div>
 
 <script>
   const input = document.getElementById('cname');
   const BLANK = '◯◯（生き物の名前）';
   const ids = ['p-select','p-search','p-factcheck','p-comp','p-theme','p-polish','p-write'];
 
-  // 元テンプレートを保存
+  // 元テンプレート保存
   const originals = {};
   ids.forEach(id => {
     const el = document.getElementById(id);
     if (el) originals[id] = el.value;
   });
 
-  // テキストエリアの高さ自動調整
   function adjustHeight(el) {
     el.style.height = 'auto';
     el.style.height = el.scrollHeight + 'px';
   }
 
-  // 全プロンプトを更新
   function updateAll() {
     const name = input.value.trim() || BLANK;
     ids.forEach(id => {
@@ -971,7 +888,6 @@
 
   input.addEventListener('input', updateAll);
 
-  // 初期高さ設定
   window.addEventListener('load', () => {
     ids.forEach(id => {
       const el = document.getElementById(id);
@@ -979,20 +895,14 @@
     });
   });
 
-  // コピー処理
   function copyPrompt(id, btn) {
     const el = document.getElementById(id);
     const text = el ? el.value : '';
-
-    navigator.clipboard.writeText(text).then(() => {
-      flash(btn);
-    }).catch(() => {
-      // Fallback
+    navigator.clipboard.writeText(text).then(() => flash(btn)).catch(() => {
       const tmp = document.createElement('textarea');
       tmp.value = text;
-      tmp.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+      tmp.style.cssText = 'position:fixed;opacity:0;';
       document.body.appendChild(tmp);
-      tmp.focus();
       tmp.select();
       try { document.execCommand('copy'); } catch(e) {}
       document.body.removeChild(tmp);
@@ -1001,37 +911,31 @@
   }
 
   function flash(btn) {
-    const orig = btn.innerHTML;
-    btn.innerHTML = '✅ コピーしました！';
-    btn.classList.add('copied');
+    const orig = btn.textContent;
+    btn.textContent = 'コピーしました ✓';
+    btn.classList.add('done');
     showToast();
-    setTimeout(() => {
-      btn.innerHTML = orig;
-      btn.classList.remove('copied');
-    }, 2200);
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('done'); }, 2000);
   }
 
   function showToast() {
     const t = document.getElementById('toast');
     t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
+    setTimeout(() => t.classList.remove('show'), 2600);
   }
 
-  // スクロールスパイ（フェーズハイライト）
-  const sections = document.querySelectorAll('.phase');
-  const chips = document.querySelectorAll('.step-chip');
+  // スクロールスパイ
+  const phaseLinks = document.querySelectorAll('.phase-link');
+  const phaseSections = document.querySelectorAll('.phase-section');
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         const href = '#' + e.target.id;
-        chips.forEach(c => c.style.background =
-          c.getAttribute('href') === href
-            ? 'rgba(255,255,255,.32)'
-            : 'rgba(255,255,255,.15)');
+        phaseLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === href));
       }
     });
-  }, { rootMargin: '-25% 0px -65% 0px' });
-  sections.forEach(s => io.observe(s));
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  phaseSections.forEach(s => io.observe(s));
 </script>
 
 </body>
